@@ -26,7 +26,7 @@
     <link href="{{asset('css/main_custom.css')}}" rel="stylesheet">
 </head>
 <body class="bg-grey">
-    <div class="header clearfix teacher-header bg-blue-dark teacher-prof-header">
+    <div class="header clearfix teacher-header {{ ($dark ?? false) == true ? 'bg-blue-dark' : '' }} teacher-prof-header">
         <div class="logo-box">
             <div><img src="img/logo/logo.png"></div>
             <div class="text-logo text-blue"><span>Daryn.teacher</span></div>
