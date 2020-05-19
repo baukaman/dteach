@@ -1,6 +1,59 @@
 @extends('layouts.app')
 
 @section('content')
+    <script src="{{ asset('/js/socket.io.js') }}"></script>
+    <script>
+        let socket;
+
+        let showRequest = function(){
+            $('#myModal').modal('show');
+        }
+        $(document).ready(function(){
+           socket = io("http://localhost:3000");
+           socket.on('lesson.request', showRequest);
+           $('#btn-accept-call').click(function(){
+               socket.emit('lesson.accept');
+               $('#myModal').modal('hide');
+           });
+        });
+    </script>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="max-width: 448px">
+            <div class="modal-content" style="border-radius: 16px; padding: 24px;">
+                <div class="modal-box-head boxHead-talk">
+                    <i class="icon phone-talk"></i>
+                    <h4>Аудиоқоңырау</h4>
+                    <button class="btn-plain close-modal" data-dismiss="modal"><img src="img/icons/close-modal.svg" alt=""></button>
+                </div>
+                <div class="teacher-loading-body">
+                    <div class="student-profile">
+                        <div class="student-profile-img">
+                            <img src="img/main/ellipse-img.svg" alt="">
+                        </div>
+                        <div class="student-profile-caption">
+                            <h4>Тұран Мұрал</h4>
+                            <p><img src="img/icons/Star.svg" alt="">4.7</p>
+                        </div>
+                    </div>
+                    <div class="call-theme">
+                        <span>Тақырып</span>
+                        <p>Жылулық қозғалыс, броундық қозғалыс және диффузия</p>
+                    </div>
+                    <div class="call-theme">
+                        <span>Пән</span>
+                        <p>Физика 7-сынып</p>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        <span>Видеоқоңырау</span>
+                    </div>
+                    <span class="span-cost">1 мин.≈ 60 теңге</span>
+                    <button class="btn-plain call-teach" id="btn-accept-call">Қабылдау</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="teacher-profile-box">
         <div class="container">
             <div class="row">
