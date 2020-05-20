@@ -14,6 +14,51 @@
            $('#btn-accept-call').click(function(){
                socket.emit('lesson.accept');
                $('#myModal').modal('hide');
+               var api;
+               $('#modal-call').modal('show').one('hidden.bs.modal', function(){
+                   api && api.dispose();
+               });
+
+               var domain = 'meet.jit.si';
+               //var domain = 'jitsi.todaysoft.kz';
+               var options = {
+                   roomName: 'daryn-001',
+                   parentNode: document.querySelector('#jitsi-meet'),
+                   configOverwrite: {
+                       defaultLanguage: 'ru'
+                   },
+                   interfaceConfigOverwrite: {
+                       SHOW_JITSI_WATERMARK: false,
+                       JITSI_WATERMARK_LINK: '',
+                       SHOW_WATERMARK_FOR_GUESTS: false,
+                       SHOW_CHROME_EXTENSION_BANNER: false,
+                       DEFAULT_REMOTE_DISPLAY_NAME: 'Пользователь',
+                       DEFAULT_LOCAL_DISPLAY_NAME: 'Я',
+                       TOOLBAR_BUTTONS: [
+                           'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
+                           'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
+                           'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
+                           'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
+                           'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone',
+                           'e2ee'
+                       ],
+                   }
+               };
+               api = new JitsiMeetExternalAPI(domain, options);
+               let totalTime = 0;
+               let timerId = setInterval(function(){
+                   if(api && api.getNumberOfParticipants() > 1) {
+                       totalTime += 1;
+                   }
+               }, 1000);
+
+               api.executeCommand('displayName', 'Бәйдібек Нұрланұлы');
+               api.executeCommand('subject', 'Физика 8 класс');
+               api.addEventListener('videoConferenceLeft', function(){
+                  api.dispose();
+                  clearInterval(timerId);
+                  $('#call-info').html("Время:" + totalTime + ", Ид препода: " + 102 + " Ид ученика: " + 58);
+               });
            });
         });
     </script>
@@ -330,6 +375,21 @@
                 <div class="col-md-4 col-md-pull-8">
                     <p>© 2019<a href=""> Bugin Holding</a></p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-call" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="border-radius: 16px; padding: 24px;">
+                <div class="modal-box-head boxHead-talk">
+                    <i class="icon phone-talk"></i>
+                    <h4>Аудиоқоңырау</h4>
+                    <button class="btn-plain close-modal" data-dismiss="modal"><img src="img/icons/close-modal.svg" alt=""></button>
+                </div>
+                <script src='https://meet.jit.si/external_api.js'></script>
+                <div id="jitsi-meet" style="height: 500px"></div>
+                <div id="call-info"></div>
             </div>
         </div>
     </div>
