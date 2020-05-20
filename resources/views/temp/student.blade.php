@@ -6,8 +6,8 @@
         <script src='https://meet.jit.si/external_api.js'></script>
 
         <div style="display: flex">
-            <a class="btn btn-info" href="#" id="lesson-request">позвонить преподавателю</a>
-            <form method="post" action="/logout" style="color: red; margin-left: 10px">@csrf <a href="#" class="do-submit">Выйти из системы</a></form>
+            <a class="btn btn-info" href="#" id="lesson-request">мұғалімге қоңырау шалу</a>
+            <form method="post" action="/logout" style="color: red; margin-left: 10px">@csrf <a href="#" class="do-submit">Жүйеден шығу</a></form>
         </div>
 
 

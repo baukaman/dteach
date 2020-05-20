@@ -1,13 +1,13 @@
 @extends('layouts.app', [ 'dark' => true])
 
-
-
 @section('content')
     <section class="content center-content auth-section">
         <div class="container">
-            <div class="auth-cover">
+            <div class="auth-cover" style="margin-top: -70px">
                 <h1>Кіру</h1>
                 <p>немесе <a href="#">жаңа профиль ашу</a></p>
+                мұғалім: teacher@buginsoft.kz, пароль: 12345678 <br/>
+                Оқушы: student@buginsoft.kz, пароль: 12345678 <br/>
                 <form method="POST" action="{{route('login')}}">
                     @csrf
                     <input type="text" placeholder="E-mail" name="email">
