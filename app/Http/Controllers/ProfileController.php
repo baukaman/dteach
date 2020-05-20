@@ -15,4 +15,9 @@ class ProfileController extends Controller
     {
         return view('profile');
     }
+
+    public function student()
+    {
+        return view('temp.student');
+    }
 }

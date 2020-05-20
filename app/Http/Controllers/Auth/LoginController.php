@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -26,7 +27,14 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::PROFILE;
+    //protected $redirectTo = RouteServiceProvider::PROFILE;
+    protected function redirectTo()
+    {
+        if(strpos(Auth::user()->email, 'teacher') !== false) {
+            return RouteServiceProvider::PROFILE;
+        } else
+            return '/student';
+    }
 
     /**
      * Create a new controller instance.
