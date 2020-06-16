@@ -22,3 +22,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/student', 'ProfileController@student')->name('student');
 Route::get('/profile', 'ProfileController@index')->name('profile');
+Route::get('/lesson.request', 'ApiController@lessonRequest')->name('lesson.request');

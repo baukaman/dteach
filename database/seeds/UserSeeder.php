@@ -24,5 +24,11 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'is_teacher' => false
         ]);
+
+        DB::table('users')->insert([
+            'name' => 'Keanu Reevs',
+            'email' => 'keanu.reevs@buginsoft.kz',
+            'password' => Hash::make('12345678')
+        ]);
     }
 }
