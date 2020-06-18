@@ -37,5 +37,10 @@ class OnlineMeetingSeeder extends Seeder
             ->make(['teacher_id' => $matt->id, 'lhs'=>10, 'teacher_email' => $matt->email])
             ->save();
 
+        //orlando lhs 10, rating  5
+        $matt = User::where('email', 'orlando.bloom@buginsoft.kz')->first();
+        factory(TeacherOnline::class)
+            ->make(['teacher_id' => $matt->id, 'lhs'=>10, 'teacher_email' => $matt->email, 'rating' => 4.8])
+            ->save();
     }
 }

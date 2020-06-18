@@ -36,5 +36,11 @@ class UserSeeder extends Seeder
             'email' => 'matt.daemon@buginsoft.kz',
             'password' => Hash::make('12345678')
         ]);
+
+        DB::table('users')->insertOrIgnore([
+            'name' => 'Orlando Bloom',
+            'email' => 'orlando.bloom@buginsoft.kz',
+            'password' => Hash::make('12345678')
+        ]);
     }
 }

@@ -23,6 +23,7 @@ class OnlineMeeting extends Migration
             $table->integer("level");
             $table->string("city");
             $table->integer("lhs");
+            $table->double("rating")->default(4.0);
             $table->timestamps();
             $table->unique(['teacher_id','subject', 'level']);
         });

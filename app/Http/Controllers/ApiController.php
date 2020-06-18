@@ -56,7 +56,18 @@ class ApiController extends Controller
                return  $teacher->lhs == $baseLhs;
             });
 
-            return response()->json($lhsConstraint);
+            $baseRating = $request->rating ?? 0.0;
+            $rConstraint = $lhsConstraint -> filter(function($t) use ($baseRating) {
+                return $t->rating >= $baseRating;
+            });
+
+            if($rConstraint -> count() > 0 ) {
+                $rConstraint = $rConstraint->sortBy(function($t) { return $t->rating; });
+            } else {
+                $rConstraint = $lhsConstraint->sortByDesc(function($t) {return $t->rating;});
+            }
+
+            return response()->json($rConstraint->values()->get(0));
         }
     }
 
