@@ -16,13 +16,15 @@ class OnlineMeeting extends Migration
         Schema::create('t_teacher_online', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->bigInteger("teacher_id")->unsigned()->unique();
+            $table->bigInteger("teacher_id")->unsigned();
             $table->foreign("teacher_id")->references("id")->on("users");
+            $table->string("teacher_email");
             $table->string("subject");
             $table->integer("level");
             $table->string("city");
             $table->integer("lhs");
             $table->timestamps();
+            $table->unique(['teacher_id','subject', 'level']);
         });
 
         DB::update("ALTER TABLE t_teacher_online AUTO_INCREMENT = 50;");

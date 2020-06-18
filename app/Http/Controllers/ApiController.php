@@ -37,7 +37,27 @@ class ApiController extends Controller
             ->where(['subject' => $request->subject, 'level' => $request->level])
             ->get();
 
-        return response()->json($users);
+        if($users->count() < 1) {
+            throw new \Exception('no.teachers.available');
+        } else {
+            $cConstraint = $users->filter(function($value, $key) use($request) {
+                return $value->city != $request->city;
+            });
+
+            if($cConstraint->count() < 1)
+                $cConstraint = $users;
+
+            $lhsConstraint = $cConstraint->sortBy(function($a) {
+                return $a->lhs;
+            });
+
+            $baseLhs = $lhsConstraint->values() -> get(0) -> lhs;
+            $lhsConstraint = $lhsConstraint->filter(function($teacher) use ($baseLhs) {
+               return  $teacher->lhs == $baseLhs;
+            });
+
+            return response()->json($lhsConstraint);
+        }
     }
 
 /**

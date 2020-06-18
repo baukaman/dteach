@@ -14,11 +14,12 @@ class ApiTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testLHS()
     {
         $response = $this->call('GET', route('lesson.request', ['subject' => 'math', 'level' => 8]))
-            ->assertJsonFragment(['teacher_id'=>10])
-            ->assertJsonMissing(['teacher_id'=>12])
+            ->assertJsonMissing(['teacher_email'=> 'teacher@buginsoft.kz'])
+            ->assertJsonMissing(['teacher_email'=>'keanu.reevs@buginsoft.kz'])
+            ->assertJsonFragment(['teacher_email'=>'matt.daemon@buginsoft.kz'])
             ->assertStatus(200);
     }
 }
