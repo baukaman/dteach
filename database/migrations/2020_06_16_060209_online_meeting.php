@@ -48,8 +48,8 @@ class OnlineMeeting extends Migration
             $table->id();
             $table->bigInteger("teacher_id")->unsigned();
             $table->foreign("teacher_id")->references("id")->on("users");
-            $table->date("start_date");
-            $table->date("end_date");
+            //$table->date("start_date");
+            //$table->date("end_date");
             $table->timestamps();
         });
 

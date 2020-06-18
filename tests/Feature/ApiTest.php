@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Repository\OnlineLessonRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
@@ -9,6 +10,14 @@ use Tests\TestCase;
 
 class ApiTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->partialMock(OnlineLessonRepository::class, function($mock){
+            $mock -> shouldReceive('addAcceptQueue')->once();
+        });
+    }
+
     /**
      * A basic feature test example.
      *

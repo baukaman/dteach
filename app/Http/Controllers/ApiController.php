@@ -3,11 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\TeacherOnline;
+use App\Repository\OnlineLessonRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
+
+    /**
+     * @var OnlineLessonRepository
+     */
+    private $repository;
+
+    public function __construct(OnlineLessonRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,19 +35,7 @@ class ApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function lessonRequest(Request $request){
-        $users = Db::table('t_teacher_online')
-            ->whereNotExists(function($query) {
-                $query -> select(DB::raw(1))
-                    -> from('t_live_lesson')
-                    -> whereRaw('t_teacher_online.teacher_id = t_live_lesson.teacher_Id');
-            })
-            ->whereNotExists(function($query){
-                $query -> select(DB::raw(1))
-                    -> from('t_teacher_accept')
-                    -> whereRaw('t_teacher_online.teacher_id = t_teacher_accept.teacher_Id');
-            })
-            ->where(['subject' => $request->subject, 'level' => $request->level])
-            ->get();
+        $users = $this->repository->onlineTeachers($request->subject, $request->level);
 
         if($users->count() < 1) {
             throw new \Exception('no.teachers.available');
@@ -67,7 +67,10 @@ class ApiController extends Controller
                 $rConstraint = $lhsConstraint->sortByDesc(function($t) {return $t->rating;});
             }
 
-            return response()->json($rConstraint->values()->get(0));
+            $teacher = $rConstraint->values()->get(0);
+            $this->repository->addAcceptQueue($teacher);
+
+            return response()->json($teacher);
         }
     }
 
