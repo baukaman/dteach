@@ -37,8 +37,8 @@ class ApiController extends Controller
             ->where(['subject' => $request->subject, 'level' => $request->level])
             ->get();
 
-    return response()->json($users);
-}
+        return response()->json($users);
+    }
 
 /**
 * Store a newly created resource in storage.

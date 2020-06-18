@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
-class ApiTests extends TestCase
+class ApiTest extends TestCase
 {
     /**
      * A basic feature test example.

@@ -4,7 +4,7 @@ use App\Models\TeacherOnline;
 use App\User;
 use Illuminate\Database\Seeder;
 
-class OnlineTeacher extends Seeder
+class OnlineMeetingSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,6 +22,7 @@ class OnlineTeacher extends Seeder
             ->make(['teacher_id' => $keanu->id, 'level' => 8])
             ->save();
 
+        //keanu is in live lesson
         DB::table('t_live_lesson')->insert([
             'name' => 'daryn-001',
             'teacher_id' => $keanu->id,
