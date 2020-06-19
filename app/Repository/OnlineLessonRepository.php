@@ -50,4 +50,9 @@ class OnlineLessonRepository
     {
         TeacherPage::where([['teacher_id', '=', $teacher_id], ['page_id', '=', $uuid]])->delete();
     }
+
+    public function getTeacherPage($onlineTeacher)
+    {
+        return TeacherPage::where('teacher_id', $onlineTeacher->teacher_id)->first();
+    }
 }

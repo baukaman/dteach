@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TeacherOnline;
 use App\Repository\OnlineLessonRepository;
+use App\Service\OnlineLessonService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,10 +15,15 @@ class ApiController extends Controller
      * @var OnlineLessonRepository
      */
     private $repository;
+    /**
+     * @var OnlineLessonService
+     */
+    private $service;
 
-    public function __construct(OnlineLessonRepository $repository)
+    public function __construct(OnlineLessonRepository $repository, OnlineLessonService $service)
     {
         $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -35,43 +41,9 @@ class ApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function lessonRequest(Request $request){
-        $users = $this->repository->onlineTeachers($request->subject, $request->level);
-
-        if($users->count() < 1) {
-            throw new \Exception('no.teachers.available');
-        } else {
-            $cConstraint = $users->filter(function($value, $key) use($request) {
-                return $value->city != $request->city;
-            });
-
-            if($cConstraint->count() < 1)
-                $cConstraint = $users;
-
-            $lhsConstraint = $cConstraint->sortBy(function($a) {
-                return $a->lhs;
-            });
-
-            $baseLhs = $lhsConstraint->values() -> get(0) -> lhs;
-            $lhsConstraint = $lhsConstraint->filter(function($teacher) use ($baseLhs) {
-               return  $teacher->lhs == $baseLhs;
-            });
-
-            $baseRating = $request->rating ?? 0.0;
-            $rConstraint = $lhsConstraint -> filter(function($t) use ($baseRating) {
-                return $t->rating >= $baseRating;
-            });
-
-            if($rConstraint -> count() > 0 ) {
-                $rConstraint = $rConstraint->sortBy(function($t) { return $t->rating; });
-            } else {
-                $rConstraint = $lhsConstraint->sortByDesc(function($t) {return $t->rating;});
-            }
-
-            $teacher = $rConstraint->values()->get(0);
-            $this->repository->addAcceptQueue($teacher);
-
-            return response()->json($teacher);
-        }
+        $onlineTeacher = $this->service->getOnlineTeacher($request->all());
+        $page = $this->repository->getTeacherPage($onlineTeacher);
+        return response()->json($page);
     }
 
     public function connectTeacher(Request $request){
