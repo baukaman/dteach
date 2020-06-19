@@ -4,6 +4,7 @@
 namespace App\Repository;
 
 use App\Models\TeacherOnline;
+use App\Models\TeacherPage;
 use Illuminate\Support\Facades\DB;
 
 class OnlineLessonRepository
@@ -35,5 +36,18 @@ class OnlineLessonRepository
         factory(\App\Models\TeacherAccept::class)->make([
             'teacher_id' => $teacherOnline->teacher_id
         ])->save();
+    }
+
+    public function connectTeacher($teacher_id, $uuid)
+    {
+        factory(TeacherPage::class)->make([
+            'teacher_id' => $teacher_id,
+            'page_id' => $uuid
+        ])->save();
+    }
+
+    public function disconnectTeacher($teacher_id, $uuid)
+    {
+        TeacherPage::where([['teacher_id', '=', $teacher_id], ['page_id', '=', $uuid]])->delete();
     }
 }

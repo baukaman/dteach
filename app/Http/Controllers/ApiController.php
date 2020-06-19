@@ -74,12 +74,20 @@ class ApiController extends Controller
         }
     }
 
-/**
-* Store a newly created resource in storage.
-*
-* @param  \Illuminate\Http\Request  $request
-* @return \Illuminate\Http\Response
-*/
+    public function connectTeacher(Request $request){
+        $this->repository->connectTeacher($request->teacher_id, $request->page_id);
+    }
+
+    public function disconnectTeacher(Request $request) {
+        $this->repository->disconnectTeacher($request->teacher_id, $request->page_id);
+    }
+
+    /**
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(Request $request)
     {
         //

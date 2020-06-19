@@ -61,6 +61,7 @@ class OnlineMeeting extends Migration
             $table->foreign("teacher_id")->references("id")->on("users");
             $table->string("page_id");
             $table->timestamps();
+            $table->unique(['teacher_id', 'page_id']);
         });
 
         DB::update("ALTER TABLE t_teacher_page AUTO_INCREMENT = 200;");
