@@ -9,7 +9,8 @@
             $('#myModal').modal('show');
         }
         $(document).ready(function(){
-           socket = io("http://localhost:3000");
+            let teacherId = {{Auth::user() -> id}};
+            socket = io(location.protocol + '//' + location.hostname + ':3000?teacher_id='+teacherId + ',&page_id=' + uuidv4());
            socket.on('lesson.request', showRequest);
            $('#btn-accept-call').click(function(){
                socket.emit('lesson.accept');
@@ -108,7 +109,7 @@
                             <img src="img/main/ellipse-img.svg" alt="">
                         </div>
                         <div class="teacher-profile-caption">
-                            <h3>Бәйдібек Нұрланұлы</h3>
+                            <h3>{{Auth::user()->email}}</h3>
                             <p><img src="img/icons/Star.svg" alt="">4.7</p>
                         </div>
                     </div>

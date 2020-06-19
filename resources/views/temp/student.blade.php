@@ -13,7 +13,7 @@
 
         <script>
             $(function(){
-                var socket = io('http://localhost:3000');
+                var socket = io(location.protocol + '//' + location.hostname + ':3000');
 
                 $('#lesson-request').click(function(){
                     socket.emit('lesson.request');

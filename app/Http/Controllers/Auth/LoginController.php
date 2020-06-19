@@ -30,7 +30,7 @@ class LoginController extends Controller
     //protected $redirectTo = RouteServiceProvider::PROFILE;
     protected function redirectTo()
     {
-        if(strpos(Auth::user()->email, 'teacher') !== false) {
+        if(Auth::user()->is_teacher) {
             return RouteServiceProvider::PROFILE;
         } else
             return '/student';
