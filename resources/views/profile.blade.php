@@ -10,7 +10,7 @@
         }
         $(document).ready(function(){
             let teacherId = {{Auth::user() -> id}};
-            socket = io(location.protocol + '//' + location.hostname + ':3000?teacher_id='+teacherId + ',&page_id=' + uuidv4());
+            socket = io(location.protocol + '//' + location.hostname + ':3000?teacher_id='+teacherId + '&page_id=' + uuidv4());
            socket.on('lesson.request', showRequest);
            $('#btn-accept-call').click(function(){
                socket.emit('lesson.accept');
