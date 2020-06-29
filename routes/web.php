@@ -25,3 +25,4 @@ Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::get('/api/lesson.request', 'ApiController@lessonRequest')->name('lesson.request');
 Route::get('/api/connect.teacher', 'ApiController@connectTeacher')->name('connect.teacher');
 Route::get('/api/disconnect.teacher', 'ApiController@disconnectTeacher')->name('disconnect.teacher');
+Route::get('/api/calc', 'ApiController@calc')->name('calc');

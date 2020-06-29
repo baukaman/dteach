@@ -54,6 +54,13 @@ class ApiController extends Controller
         $this->repository->disconnectTeacher($request->teacher_id, $request->page_id);
     }
 
+    public function calc(Request $request){
+        $num = $request['num'];
+        if($request['wait']) {
+            sleep($request['wait']);
+        }
+        return response()->json(["num" => $num * $num]);
+    }
     /**
     * Store a newly created resource in storage.
     *
