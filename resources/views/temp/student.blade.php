@@ -64,6 +64,35 @@
             });
         </script>
 
+        <style>
+            .t-box {
+                border: 1px solid #1B316D;
+                padding: 10px 20px;
+            }
+
+        </style>
+
+        <div style="display: flex; margin-top: 5px" class="t-box-container">
+            <div class="t-box">
+                <div>Keanu Reevs, <span>online</span></div>
+                <div>1 tabs</div>
+            </div>
+            <div class="t-box">
+                <div>Matt Daemon, <span>online</span></div>
+                <div>2 tabs</div>
+            </div>
+        </div>
+
+        <form style="max-width: 400px; margin-top: 10px">
+            <div class="form-group">
+                <input type="text" class="form-control"  placeholder="email" />
+            </div>
+            <div class="form-group">
+                <input type="text" name="fio" class="form-control" placeholder="Аты-Жөні" style="width:300px" />
+            </div>
+            <button type="button" class="btn btn-success btn-xs">қоңырау шалу</button>
+        </form>
+
         <div id="jitsi-meet" style="height: 500px"></div>
     </div>
 @endsection
